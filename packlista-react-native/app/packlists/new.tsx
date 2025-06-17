@@ -1,4 +1,4 @@
-import * as Crypto from "expo-crypto"; // 🔁 ersätter uuid
+import * as Crypto from "expo-crypto";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
@@ -14,7 +14,7 @@ import templates from "../../data/templates";
 import { PackItem, PackList } from "../../types";
 import { getLists, saveLists } from "../../utils/storage";
 
-// 🔁 ersätter uuidv4
+
 const uuidv4 = () => Crypto.randomUUID();
 
 export default function NewListScreen() {
@@ -24,7 +24,7 @@ export default function NewListScreen() {
   const [title, setTitle] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
 
-  // 🔁 Välj mall från query-param (och sätt titel om den är tom)
+  
   useEffect(() => {
     if (!templateId) return;
     setSelectedTemplate(templateId);
@@ -78,7 +78,7 @@ export default function NewListScreen() {
       {/* Formulär */}
       <Text style={styles.label}>Name</Text>
       <TextInput
-        placeholder="e.g. Trip to Italy 2025"
+        placeholder=""
         value={title}
         onChangeText={setTitle}
         style={styles.input}

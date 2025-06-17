@@ -1,17 +1,20 @@
-import { v4 as uuidv4 } from 'uuid';
+import { nanoid } from 'nanoid';
 import { PackItem, PackList } from '../types';
 
+// Skapar pack items från en lista av namn, varje med ett unikt ID
 const toPackItems = (names: string[]): PackItem[] =>
   names.map((name) => ({
-    id: uuidv4(),
+    id: nanoid(), 
     name,
     packed: false,
   }));
 
-const templates: PackList[] = [
+// Fördefinierade listor som visas vid första appstart
+export const predefinedLists: PackList[] = [
   {
-    id: 'weekend-getaway',
+    id: nanoid(),
     title: 'Weekend Getaway',
+    createdAt: new Date().toISOString(),
     items: toPackItems([
       'Clothes (2–3 outfits)',
       'Toiletries',
@@ -24,8 +27,9 @@ const templates: PackList[] = [
     ]),
   },
   {
-    id: 'business-trip',
+    id: nanoid(),
     title: 'Business Trip',
+    createdAt: new Date().toISOString(),
     items: toPackItems([
       'Work clothes / Business attire',
       'Laptop + charger',
@@ -38,8 +42,9 @@ const templates: PackList[] = [
     ]),
   },
   {
-    id: 'italy-2025',
+    id: nanoid(),
     title: 'Trip to Italy 2025',
+    createdAt: new Date().toISOString(),
     items: toPackItems([
       'Passport',
       'Visa (if required)',
@@ -56,4 +61,3 @@ const templates: PackList[] = [
     ]),
   },
 ];
-export default templates;  

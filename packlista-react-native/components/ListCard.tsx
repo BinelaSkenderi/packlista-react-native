@@ -3,7 +3,7 @@ import { PackList } from '../types';
 
 type Props = {
   list: PackList;
-  onDelete?: (id: string) => void; // ny prop
+  onDelete?: (id: string) => void; 
 };
 
 export default function ListCard({ list, onDelete }: Props) {

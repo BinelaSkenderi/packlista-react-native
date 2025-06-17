@@ -1,10 +1,9 @@
-// utils/seed.ts
 import { PackList } from "../types";
 import { getLists, saveLists } from "./storage";
 
 export async function seedInitialLists() {
   const existing = await getLists();
-  if (existing.length > 0) return; // redan data, gör inget
+  if (existing.length > 0) return; 
 
   const exampleLists: PackList[] = [
     {
