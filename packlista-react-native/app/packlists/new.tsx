@@ -1,8 +1,9 @@
-import * as Crypto from "expo-crypto";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import {
   Alert,
+  FlatList,
   StyleSheet,
   Text,
   TextInput,
@@ -14,23 +15,24 @@ import templates from "../../data/templates";
 import { PackItem, PackList } from "../../types";
 import { getLists, saveLists } from "../../utils/storage";
 
-
-const uuidv4 = () => Crypto.randomUUID();
-
 export default function NewListScreen() {
   const router = useRouter();
   const { templateId } = useLocalSearchParams<{ templateId?: string }>();
 
   const [title, setTitle] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null);
+  const [items, setItems] = useState<PackItem[]>([]);
+  const [newItemText, setNewItemText] = useState("");
 
-  
   useEffect(() => {
     if (!templateId) return;
     setSelectedTemplate(templateId);
 
     const temp = templates.find((t) => t.id === templateId);
-    if (temp && !title) setTitle(temp.title);
+    if (temp) {
+      if (!title) setTitle(temp.title);
+      setItems(temp.items.map((item) => ({ ...item, id: nanoid(), packed: false })));
+    }
   }, [templateId]);
 
   const handleSave = async () => {
@@ -39,18 +41,8 @@ export default function NewListScreen() {
       return;
     }
 
-    const template = templates.find((t) => t.id === selectedTemplate);
-
-    const items: PackItem[] = template
-      ? template.items.map((item) =>
-          typeof item === "string"
-            ? { id: uuidv4(), name: item, packed: false }
-            : { ...item, id: uuidv4(), packed: false }
-        )
-      : [];
-
     const newList: PackList = {
-      id: uuidv4(),
+      id: nanoid(),
       title,
       items,
       createdAt: new Date().toISOString(),
@@ -59,7 +51,24 @@ export default function NewListScreen() {
     const all = await getLists();
     await saveLists([...all, newList]);
 
-    router.replace(`/packlists/${newList.id}`); // gå till listan
+    router.replace(`/packlists/${newList.id}`);
+  };
+
+  const handleAddItem = () => {
+    if (!newItemText.trim()) return;
+
+    const newItem: PackItem = {
+      id: nanoid(),
+      name: newItemText.trim(),
+      packed: false,
+    };
+
+    setItems([...items, newItem]);
+    setNewItemText("");
+  };
+
+  const handleRemoveItem = (id: string) => {
+    setItems(items.filter((item) => item.id !== id));
   };
 
   return (
@@ -78,7 +87,7 @@ export default function NewListScreen() {
       {/* Formulär */}
       <Text style={styles.label}>Name</Text>
       <TextInput
-        placeholder=""
+        placeholder="Enter list name"
         value={title}
         onChangeText={setTitle}
         style={styles.input}
@@ -95,6 +104,37 @@ export default function NewListScreen() {
         <Text style={styles.selectedTemplate}>
           Vald mall: {templates.find((t) => t.id === selectedTemplate)?.title}
         </Text>
+      )}
+
+      {/* Add item */}
+      <Text style={[styles.label, { marginTop: 30 }]}>Add item</Text>
+      <View style={styles.addItemRow}>
+        <TextInput
+          placeholder="e.g. Toothbrush"
+          value={newItemText}
+          onChangeText={setNewItemText}
+          style={[styles.input, { flex: 1, marginRight: 10 }]}
+        />
+        <TouchableOpacity onPress={handleAddItem} style={styles.addItemButton}>
+          <Text style={{ color: "white", fontWeight: "600" }}>Add</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Show current items */}
+      {items.length > 0 && (
+        <FlatList
+          data={items}
+          keyExtractor={(item) => item.id}
+          style={{ marginTop: 20 }}
+          renderItem={({ item }) => (
+            <View style={styles.itemRow}>
+              <Text style={styles.itemText}>• {item.name}</Text>
+              <TouchableOpacity onPress={() => handleRemoveItem(item.id)}>
+                <Text style={styles.deleteButton}>🗑️</Text>
+              </TouchableOpacity>
+            </View>
+          )}
+        />
       )}
     </View>
   );
@@ -127,4 +167,28 @@ const styles = StyleSheet.create({
   },
   templateButtonText: { fontSize: 16, color: "#333" },
   selectedTemplate: { marginTop: 10, color: "#555" },
+  addItemRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  addItemButton: {
+    backgroundColor: "#1e90ff",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+  },
+  itemRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    paddingVertical: 8,
+    borderBottomColor: "#ddd",
+    borderBottomWidth: 1,
+  },
+  itemText: {
+    fontSize: 16,
+    color: "#333",
+  },
+  deleteButton: {
+    fontSize: 18,
+  },
 });
