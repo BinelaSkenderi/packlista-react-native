@@ -1,8 +1,36 @@
-# Welcome to your Expo app 👋
+# PackList App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+En enkel React Native-app byggd med Expo och Expo Router som hjälper dig att skapa och hantera packlistor för olika resor och tillfällen.
 
-## Get started
+
+## Funktioner
+
+- Visa en lista med packlistor (exempel: Weekend Gateway, Business Trip, Trip to Italy)
+- Skapa nya packlistor med valfria items
+- Visa detaljer för varje packlista med en lista av items
+- Markera items som "packade" med checkbox
+- Ta bort packlistor som du inte vill ha kvar
+- Data sparas lokalt på enheten med asynkron lagring (`AsyncStorage`)
+
+
+## 🧑‍💻 Användning
+
+- På startsidan visas dina packlistor. Klicka på en lista för att se innehållet.
+- Markera kryssrutor på items för att ange vad som är packat.
+- Skapa en ny lista via "New List"-knappen.
+- Ta bort en lista genom att klicka på papperskorgen på listkortet.
+
+
+## 📁 Struktur
+
+- app/ # Sidor och routing (Expo Router)
+- components/ # Återanvändbara UI-komponenter (t.ex. ListCard)
+- utils/storage.ts # Funktioner för att läsa/spara packlistor i lokal lagring
+- types.ts # TypeScript-typer för packlistor och items
+
+
+
+## Installation och körning
 
 1. Install dependencies
 
@@ -16,35 +44,28 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Teknologier
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+- **React Native** med **Expo**
+- **Expo Router** för navigation
+- **AsyncStorage** för lokal lagring
+- **TypeScript** för typning
 
-## Get a fresh project
+---
 
-When you're ready, run:
+## Framtida förbättringar
 
-```bash
-npm run reset-project
-```
+- Synkronisering med molnet (backup & återställning)
+- Dela packlistor med andra användare
+- Fler anpassningsmöjligheter för listor och innehåll
+- Förbättrad design, animationer och användarupplevelse
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-## Learn more
 
-To learn more about developing your project with Expo, look at the following resources:
+**Binela Skenderi**  
+📎 GitHub: [https://github.com/BinelaSkenderi] 
+📦 Repository: [https://github.com/BinelaSkenderi/packlista-react-native.git]
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+> Byggd med ❤️ och Expo
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
