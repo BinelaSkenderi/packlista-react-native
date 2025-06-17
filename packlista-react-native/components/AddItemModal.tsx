@@ -24,6 +24,7 @@ export default function AddItemModal({ visible, onClose, onSave }: Props) {
       id: title.toLowerCase().replace(/\s+/g, '-'),
       title,
       items: [],
+      createdAt: ''
     };
     onSave(newList);
     setTitle('');

@@ -9,8 +9,8 @@ const toPackItems = (names: string[]): PackItem[] =>
     packed: false,
   }));
 
-// Fördefinierade listor som visas vid första appstart
-export const predefinedLists: PackList[] = [
+
+export const templates: PackList[] = [
   {
     id: nanoid(),
     title: 'Weekend Getaway',
@@ -61,3 +61,6 @@ export const predefinedLists: PackList[] = [
     ]),
   },
 ];
+export default templates;
+
+
