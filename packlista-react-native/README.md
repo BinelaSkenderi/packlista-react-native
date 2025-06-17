@@ -18,7 +18,9 @@ En enkel React Native-app byggd med Expo och Expo Router som hjälper dig att sk
 - På startsidan visas dina packlistor. Klicka på en lista för att se innehållet.
 - Markera kryssrutor på items för att ange vad som är packat.
 - Skapa en ny lista via "New List"-knappen.
-- Ta bort en lista genom att klicka på papperskorgen på listkortet.
+- På sidan för att skapa ny packlista kan du nu lägga till egna items med en knapp.
+- Du kan också ta bort items innan du sparar listan.
+- Listan med items visas dynamiskt medan du bygger din packlista.
 
 
 ## 📁 Struktur
